@@ -1,1 +1,4 @@
-/store-tweets-with-giving-location/
+.classpath
+.settings/
+target/
+.project
