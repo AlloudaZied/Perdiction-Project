@@ -6,11 +6,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 public  class ProducerInt {
-	KafkaProducer<String, String> producer = null;
-	
+	KafkaProducer<String, String> producer = null;	
 	public KafkaProducer<String, String>  configureProducer(String listbrokers) {
 		 Properties props = new Properties();
-		    props.put("bootstrap.servers", "latitude:6667");
+		    props.put("bootstrap.servers", "192.168.1.162:6667,192.168.1.161:6667,192.168.1.163:6667");
 		    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		    producer = new KafkaProducer<String, String>(props);
@@ -31,8 +30,8 @@ public  class ProducerInt {
 	 * */
 	public void sendData(String topicName , String key ,String value)
 	{	
-		producer.send(new ProducerRecord<String, String>(topicName, key, value));	}
-	
+		producer.send(new ProducerRecord<String, String>(topicName, key, value));
+    }	
 	public void closeProducteur()
 	{
 		producer.close();

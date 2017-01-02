@@ -26,6 +26,10 @@ import org.apache.log4j.Logger;
  *        This is the configuration of ZNODE
  * @param args[3] 
  *        This is the property CONFIG of the KafkaProducer (@ of the broker KAFKA LISTNER)
+ *        
+ * @author SENDI ZIED
+ * @version 1.0
+ * @see https://github.com/AlloudaSendi/Perdiction-Project/tree/develop/Exemple-Produce-on-kafka
  *
  */
 
@@ -43,8 +47,8 @@ public class ProducerKafka extends ProducerInt
       ProducerInt prod = new ProducerInt();      
       prod.configureProducer(brokerlist);
       configuration.set("zookeeper.znode.parent", "/hbase-unsecure");
-//      configuration.set("hbase.zookeeper.quorum","192.168.1.161,192.168.1.162,192.168.1.163");
-//      configuration.set("hbase.zookeeper.property.clientPort", "2181");
+      configuration.set("hbase.zookeeper.quorum","192.168.1.161,192.168.1.162,192.168.1.163");
+      configuration.set("hbase.zookeeper.property.clientPort", "2181");
       Connection connection = ConnectionFactory.createConnection(configuration);
       Table table = connection.getTable(TableName.valueOf("tweetstableSplitted"));            
       Scan scanner = new Scan(StartKey,EndKey);
@@ -59,7 +63,12 @@ public class ProducerKafka extends ProducerInt
     	    Result entireRow = table.get(get); 
     	    byte [] value = entireRow.value();
     	    byte [] key = entireRow.getRow();
-    	    prod.sendData(topicname, Bytes.toString(key), Bytes.toString(value));      	    
+    	    try {
+    	    prod.sendData(topicname, Bytes.toString(key), Bytes.toString(value));
+                }
+    	    catch (Exception e) {
+                    	  System.out.println("failed to produce on " +topicname);
+                      }    	    
       }      
     }
     catch (Exception e)

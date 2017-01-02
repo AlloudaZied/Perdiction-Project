@@ -24,17 +24,18 @@ public class Copy
     {   
     	Integer  keys = new Integer(args[0]);
     	Configuration conf = new Configuration();
-        conf.set("hbase.zookeeper.quorum","ip-zookeeper1,ip-zookeeper2 ...");
-        conf.set("hbase.zookeeper.property.clientPort", "2181");
+//        conf.set("hbase.zookeeper.quorum","192.168.1.161,192.168.1.162,192.168.1.163");
+//        conf.set("hbase.zookeeper.property.clientPort", "2181");
         conf.set("zookeeper.znode.parent", "/hbase-unsecure");
         Connection conn = ConnectionFactory.createConnection(conf);
         Connection conne= ConnectionFactory.createConnection(conf);
-        Table tablesource = conn.getTable(TableName.valueOf("Name-table1"));
-        Table tablereceiver = conne.getTable(TableName.valueOf("Name-table2"));
+		Table tablesource = conn.getTable(TableName.valueOf("tweetstable"));
+        Table tablereceiver = conne.getTable(TableName.valueOf("montesttable"));
         Scan scanner = new Scan();
-        scanner.addFamily("tweets".getBytes());
-        ResultScanner resultScanner = tablesource.getScanner(scanner);       
-	    System.out.println("Loading data ...");
+        scanner.addFamily("family1".getBytes());
+        ResultScanner resultScanner = tablesource.getScanner(scanner);  
+        System.out.println("Loading data ...");
+        
         for (Result result= resultScanner.next();result !=null;result = resultScanner.next())
           {      keys ++;
             Put put = new Put(keys.toString().getBytes());
@@ -43,7 +44,7 @@ public class Copy
         	    byte [] value = entireRow.value();
         	    put.addColumn("tweets".getBytes(), "value".getBytes(), value);
         	    tablereceiver.put(put);        	   
-//        	    System.out.println(value);
+        	    System.out.println(value);
           }
     }
 }
