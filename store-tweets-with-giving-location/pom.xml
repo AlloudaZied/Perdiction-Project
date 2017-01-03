@@ -2,18 +2,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.tcbConsultion.storeweets</groupId>
-  <artifactId>store-tweets-with-giving-location</artifactId>
+  <groupId>org.tcbconsultion.store</groupId>
+  <artifactId>store-hbase</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-
-  <name>store-tweets-with-giving-location</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-<!--  adding all dependencies> -->
   <dependencies>
    <dependency>
            <groupId>org.apache.hbase</groupId>
@@ -64,7 +61,6 @@
 						<mainClass>org.java.tcbconsulting.storetweets.StoreTweetsONHbase</mainClass>
 					  </manifest>
 					</archive>
-
 				</configuration>
 				<executions>
 				  <execution>
